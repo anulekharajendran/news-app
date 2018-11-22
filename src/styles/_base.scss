@@ -1,0 +1,210 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+* {
+    padding: 0;
+    margin: 0;
+}
+
+// #region Scroll Bar Style
+
+/* body scroll width */
+
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: $light-grey;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: $grey;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: $dark-grey;
+}
+
+// #endregion Scroll Bar Style
+// #region Fade Transition
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.125s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// #endregion Fade Transition
+// #region Slide Transition
+.slide {
+    &-enter {
+        transform: translate(120%, 0);
+        &-active {
+            opacity: 0;
+            transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        &-to {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+    }
+    &-leave {
+        transform: translate(0, 0);
+        &-active {
+            opacity: 1;
+            transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        &-to {
+            transform: translate(120%, 0);
+        }
+    }
+    // #region Slide Down Transition
+    &-down {
+        &-enter {
+            transform: translate(0, -120%);
+            &-active {
+                opacity: 0;
+                transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            &-to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+        &-leave {
+            transform: translate(0, 0);
+            &-active {
+                opacity: 1;
+                transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            &-to {
+                transform: translate(0, -120%);
+            }
+        }
+        // #region Slide Down Menu Transition
+        &-menu {
+            &-enter {
+                opacity: 0;
+                transform: scaleY(0);
+                &-active {
+                    opacity: 0.5;
+                    transition: all .15s ease-in;
+                    transform-origin: top;
+                }
+                &-to {
+                    opacity: 1;
+                    transform: scaleY(1);
+                }
+            }
+            &-leave {
+                opacity: 1;
+                transform: scaleY(1);
+                &-active {
+                    opacity: 0.5;
+                    transition: all .15s ease-out;
+                    transform-origin: top;
+                }
+                &-to {
+                    height: 0;
+                    transform: scaleY(0);
+                    opacity: 0;
+                }
+            }
+        }
+        // #endregion Slide Down Menu Transition
+    }
+    &-up {
+        &-enter {
+            transform: translate(0, 120%);
+            &-active {
+                opacity: 0;
+                transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            &-to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+        &-leave {
+            transform: translate(0, 0);
+            &-active {
+                opacity: 1;
+                transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            &-to {
+                transform: translate(0, 120%);
+            }
+        }
+        // #endregion Slide Down Menu Transition
+    }
+    // #endregion Slide Down Transition
+}
+
+// #endregion Slide Transition
+// #region Slide Right Keyframe
+@keyframes slide-right {
+    from {
+        transform: translate(-100%, 0);
+    }
+    to {
+        transform: translate(0, 0);
+    }
+}
+
+// #endregion Slide Right Transition
+// #region Form Base style
+form {
+    width: 100%;
+    @include interpolate(max-width, $min-screen-em-width, $max-screen-em-width, 22em, 25em);
+    margin-bottom: 2rem;
+    ;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    box-shadow: inset 0 0 0px 9999px $dusker-grey;
+}
+
+// #endregion Form Base style
+// #region Font color classes
+.green {
+    color: $green !important;
+}
+
+.red {
+    color: $red !important;
+}
+
+.purple {
+    color: $purple !important;
+}
+
+.grey {
+    color: $grey !important;
+}
+
+.blue {
+    color: $blue !important;
+}
+
+// #endregion Font color classes

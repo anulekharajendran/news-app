@@ -1,0 +1,109 @@
+@import 'variables';
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+/* Default pseudo element styles */
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+/* Style input placeholders in all the separate formats */
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+/* regular box shadow style */
+@mixin box-shadow {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+@mixin hover-box-shadow {
+  box-shadow: inset 1px 0 0 $light-grey, inset -1px 0 0 $light-grey, 0 1px 2px 0 rgba($color: $darkest-grey, $alpha: 0.3);
+}
+
+// --------------------------------------------------------------
+// * Responsive fluid style mixin starts *
+// 
+// Setting a single property
+// html {
+// 	@include interpolate(font-size, 320px, 1366px, 14px, 20px);
+// }
+// setting multiple properties with same values
+// h1,h2,h3,h4,h5 {
+// 	@include interpolate((padding-top, padding-bottom), 20rem, 70rem, 0rem, .5rem);
+// }
+@mixin interpolate($properties, $min-screen, $max-screen, $min-value, $max-value) {
+  & {
+    @each $property in $properties {
+      #{$property}: $min-value;
+    }
+
+    @media screen and (min-width: $min-screen) {
+      @each $property in $properties {
+        #{$property}: calc-interpolation($min-screen, $min-value, $max-screen, $max-value); 
+      }
+    }
+
+    @media screen and (min-width: $max-screen) {
+      @each $property in $properties {
+        #{$property}: $max-value;
+      }
+    }
+  }
+}
+
+// Requires the calc-interpolation function which can also be used independently
+@function calc-interpolation($min-screen, $min-value, $max-screen, $max-value) {
+  $a: ($max-value - $min-value) / ($max-screen - $min-screen);
+  $b: $min-value - $a * $min-screen; 
+
+  $sign: "+";
+  @if ($b < 0) {
+    $sign: "-";
+    $b: abs($b);
+  }
+  @return calc(#{$a*100}vw #{$sign} #{$b});
+}
+// * Responsive fluid style mixin ends *
+// --------------------------------------------------------------
+
+
+// .site-header {
+//   padding: 2rem;
+//   font-size: 1.8rem;
+//   @include mq('tablet-wide') {
+//     padding-top: 4rem;
+//     font-size: 2.4rem;
+//   }
+// }
+$breakpoints: (
+  "phone":        400px,
+  "phone-wide":   480px,
+  "phablet":      560px,
+  "tablet-small": 640px,
+  "tablet":       768px,
+  "tablet-wide":  1024px,
+  "desktop":      1248px,
+  "desktop-wide": 1440px
+);
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
