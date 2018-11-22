@@ -7,7 +7,7 @@
           v-for="category in newsCategories"
           active-class="active"
           exact-active-class="active"
-          :to="category"
+          v-bind:to="'/news/' + category"
         >
           {{ category }}
         </router-link> -->
