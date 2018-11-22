@@ -2,7 +2,24 @@
   <div class="sidebar">
     <div class="sidebar--body">
       <div class="sidebar--body-item">
-        SIDEBAR
+        <!-- <router-link
+          :key="category"
+          v-for="category in newsCategories"
+          active-class="active"
+          exact-active-class="active"
+          :to="category"
+        >
+          {{ category }}
+        </router-link> -->
+        <router-link
+          :key="category"
+          v-for="category in categories"
+          active-class="active"
+          exact-active-class="active"
+          v-bind:to="'/news/' + category"
+        >
+          {{ category }}
+        </router-link>
       </div>
     </div>
   </div>
@@ -10,9 +27,30 @@
 
 <script>
 import axios from 'axios';
+import uniq from 'lodash/uniq';
 
 export default {
   name: 'Sidebar',
+
+  data() {
+    return {
+      categories: ['general', 'business', 'technology', 'sports', 'entertainment', 'health', 'science'],
+      source: null,
+    };
+  },
+
+  mounted() {
+    axios
+      .get('https://newsapi.org/v2/sources?apiKey=fb76179167f6474ca2a274542c4e8c98')
+      .then(response => (this.source = response.data.sources));
+  },
+
+  computed: {
+    newsCategories() {
+      return uniq(this.source.map(n => n.category));
+    },
+  },
+
 };
 </script>
 
@@ -37,6 +75,8 @@ export default {
     &-item{
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
+      height: 100%;
 
       a{
         color: $black;
@@ -45,6 +85,7 @@ export default {
 
         font-size: 1rem;
         font-weight: normal;
+        text-transform: capitalize;
       }
       a.active{
         background-color: $lightest-grey;

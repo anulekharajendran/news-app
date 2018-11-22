@@ -3,7 +3,7 @@
     <router-link
       :to="{ name: 'Home' }"
     >
-      HEADER
+      Current News
     </router-link>
   </div>
 </template>
