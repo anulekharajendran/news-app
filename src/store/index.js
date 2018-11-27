@@ -1,7 +1,5 @@
-import SIDEBAR from './modules/sidebar';
-import GENERAL from './modules/general';
+import SOURCES from './modules/sources';
 
 export default {
-    SIDEBAR,
-    GENERAL,
+    SOURCES,
 };

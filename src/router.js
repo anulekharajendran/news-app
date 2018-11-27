@@ -23,7 +23,7 @@ export default new Router({
                     component: () =>
                         import ('./components/Home.vue'),
                     props: true,
-                    redirect: 'general'
+                    // redirect: 'general'
                 },
                 {
                     name: 'General',

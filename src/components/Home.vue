@@ -2,59 +2,56 @@
     <transition name="fade" mode="out-in">
       <div class="home">
         <div
-          :key="category"
-          v-for="category in categories"
-          class="home--category">
-          <div
-            class="home--category-header"
+          class="home--category"
+          v-for="selectedSource in selectedSources"
+          :key="selectedSource.id"
           >
+          <div
+            class="home--category-header">
             <h1
-              class="home--category-header-title"
-            >
-              {{category}}
+              class="home--category-header-title">
+              {{ selectedSource.name }}
             </h1>
             <span
               class="home--category-header-option"
-            >
+              @click="sourceChanged(source.id)">
               read more
             </span>
           </div>
-          <div
-            class="home--category-content"
-          >
-            <div
-              class="home--category-content-details"
-              :key="data.id"
-              v-for="data in source"
-            >
-              {{ data.name}}
-            </div>
-          </div>
-
         </div>
       </div>
     </transition>
 </template>
 
 <script>
-import axios from 'axios';
+import {mapGetters} from 'vuex';
 
 export default {
-  name: 'Home',
+	name: 'Home',
 
-  data() {
-    return {
-      categories: ['general', 'business', 'technology', 'sports', 'entertainment', 'health', 'science'],
-      source: null,
-    };
+	data() {
+		return {
+			sources: [],
+			source: ''
+		};
+	},
+
+	methods: {
+		sourceChanged() {
+      this.$store.dispatch('getSelectedSources');
+		}
+	},
+
+	computed: {
+		...mapGetters({
+			selectedSources:'selectedSources',
+			selectedSource: 'selectedSource'
+		})
   },
 
-  mounted() {
-    axios
-      .get('https://newsapi.org/v2/sources?category=general&apiKey=fb76179167f6474ca2a274542c4e8c98')
-      .then(response => (this.source = response.data.sources));
-  },
-
+	created: function(){
+		this.$store.dispatch('getNews')
+	}
 };
 </script>
 
