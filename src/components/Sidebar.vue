@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar--body">
       <div class="sidebar--body-item">
-        <!-- <router-link
+        <router-link
           :key="category"
           v-for="category in newsCategories"
           active-class="active"
@@ -10,16 +10,8 @@
           v-bind:to="'/news/' + category"
         >
           {{ category }}
-        </router-link> -->
-        <router-link
-          :key="category"
-          v-for="category in categories"
-          active-class="active"
-          exact-active-class="active"
-          v-bind:to="'/news/' + category"
-        >
-          {{ category }}
         </router-link>
+
       </div>
     </div>
   </div>
@@ -35,7 +27,7 @@ export default {
   data() {
     return {
       categories: ['general', 'business', 'technology', 'sports', 'entertainment', 'health', 'science'],
-      source: null,
+      source: [],
     };
   },
 
