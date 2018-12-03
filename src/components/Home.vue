@@ -14,7 +14,7 @@
             </h1>
             <span
               class="home--category-header-option"
-              @click="sourceChanged(source.id)">
+              @click="sourceChanged(selectedSource.id)">
               read more
             </span>
           </div>
@@ -31,27 +31,29 @@ export default {
 
 	data() {
 		return {
-			sources: [],
-			source: ''
+			// sources: [],
+      source: '',
+      selectedSourceId: '',
 		};
 	},
 
 	methods: {
-		sourceChanged() {
-      this.$store.dispatch('getSelectedSources');
+		sourceChanged(sourceId) {
+      this.$store.dispatch('getSelectedSources', { sourceId } );
 		}
 	},
 
 	computed: {
-		...mapGetters({
-			selectedSources:'selectedSources',
-			selectedSource: 'selectedSource'
-		})
+    ...mapGetters([
+      'selectedSources',
+			'selectedSource'
+    ]),
   },
 
-	created: function(){
-		this.$store.dispatch('getNews')
-	}
+  created() {
+    this.$store.dispatch('getNews')
+  }
+
 };
 </script>
 

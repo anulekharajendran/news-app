@@ -56,6 +56,7 @@ export default {
 
   computed: {
     ...mapGetters([
+      'newsArticles'
     ])
   },
 
@@ -124,11 +125,14 @@ export default {
         align-items: flex-start;
         flex-direction: column;
         font-size: 1rem;
+        max-width: 24%;
         @include mq('tablet-small') {
           flex: 0 0 31%;
+          max-width: 31%
         }
         @include mq('desktop-wide') {
           flex: 0 0 19%;
+          max-width: 19%;
         }
         &-image{
           width: 100%;

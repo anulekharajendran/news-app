@@ -7,39 +7,39 @@ const mutationType = {
     INIT: 'INIT',
     GET_NEWS: 'GET_NEWS',
     GET_NEWS_SOURCES: 'GET_NEWS_SOURCES',
+    GET_NEWS_ARTICLES: 'GET_NEWS_ARTICLES',
 };
 
 const state = {
-    status: mutationType.INIT,
-    selectedSources: [],
-    selectedSource: ""
+    newsArticles: []
 };
 
 const getters = {
-    selectedSources: state => state.selectedSources,
-    selectedSource: state => state.selectedSource
+    newsArticles: state => state.newsArticles
 };
 
 const mutations = {
-    [mutationType.GET_NEWS](state, sources) {
-        state.selectedSources = sources;
+    [mutationType.GET_NEWS_ARTICLES](state, source) {
+        state.newsArticles = source;
     }
 };
 
 const actions = {
-    getNews({ commit }) {
-        axios
-            .get(`${API_BASE_URL}/sources?language=en&apiKey=${API_KEY}`)
+    getNewsArticle({ commit }, state) {
+        return new Promise(resolve =>
+            axios
+            .get(
+                `${API_BASE_URL}/everything?sources=${this.source}&language=en&apiKey=${API_KEY}`
+            )
             .then(function(response) {
-                commit("GET_NEWS", response.data.sources);
+                commit("GET_NEWS_ARTICLES", response.data.articles);
+                resolve("ok");
             })
             .catch(function(err) {
                 console.log(err);
-            });
+            })
+        );
     },
-    getSelectedSources({ commit }, source) {
-        commit("GET_NEWS_SOURCES", source);
-    }
 };
 
 export default {
